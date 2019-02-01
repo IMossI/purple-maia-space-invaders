@@ -11,8 +11,8 @@
 
 <div id="game"></div>
 <script src="assets/js/phaser.js"></script>
-    
-    
+
+
 <script>
 /* global Phaser, game */
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
@@ -47,6 +47,7 @@ var stateText;
 var livingEnemies = [];
 
 function create() {
+
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -89,6 +90,7 @@ function create() {
     scoreString = 'Score : ';
     scoreText = game.add.text(10, 10, scoreString + score, { font: '34px Arial', fill: '#fff' });
 
+
     //  Lives
     lives = game.add.group();
     game.add.text(game.world.width - 225, 10, 'Lives : ', { font: '34px Arial', fill: '#fff' });
@@ -98,7 +100,7 @@ function create() {
     stateText.anchor.setTo(0.5, 0.5);
     stateText.visible = false;
 
-    for (var i = 0; i < 3; i++) 
+    for (var i = 0; i < 3; i++)
     {
         var ship = lives.create(game.world.width - 100 + (30 * i), 30, 'ship');
         ship.anchor.setTo(0.5, 0.5);
@@ -114,9 +116,9 @@ function create() {
     //  And some controls to play the game with
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    
+
 }
-    
+
 function createAliens () {
 
         for (var y = 0; y < 4; y++)
@@ -233,7 +235,7 @@ function collisionHandler (bullet, alien) {
 }
 
 function enemyHitsPlayer (player,bullet) {
-    
+
     bullet.kill();
 
     live = lives.getFirstAlive();
@@ -279,7 +281,7 @@ function enemyFires () {
 
     if (enemyBullet && livingEnemies.length > 0)
     {
-        
+
         var random=game.rnd.integerInRange(0,livingEnemies.length-1);
 
         // randomly select one of them
@@ -322,7 +324,11 @@ function resetBullet (bullet) {
 function restart () {
 
     //  A new level starts
-    
+
+    // Reset the scoreText
+    score = 0;
+    scoreText.text = scoreString + score;
+
     //resets the life count
     lives.callAll('revive');
     //  And brings the aliens back from the dead :)
@@ -333,6 +339,8 @@ function restart () {
     player.revive();
     //hides the text
     stateText.visible = false;
+
+//score = 0;
 
 }
 </script>
